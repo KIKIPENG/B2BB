@@ -1,17 +1,20 @@
 /* 背面調查局｜展場介面
-   配色限定：黑、白、灰、淺藍。字體：Inter Tight（數字／英文）、JetBrains Mono（標籤）、Noto Sans TC（中文）。
+   配色限定：黑、白、灰、淺藍。字體：Mono Spec（英文、數字、標籤）＋ Unwrapping Compo Text Grid（中文）；未安裝時退回 Inter Tight／JetBrains Mono／Noto Sans TC。
    排版原則（取自參考圖）：
    1. 巨大數字 × 極小標籤：數字細、字距收緊；標籤 10–11px、全大寫、字距放寬。
    2. 卡片「左上小標、左下大值」，右上放膠囊 tag。
    3. 標題句點收尾（Voice.）＋灰色副標，兩層資訊。
    4. 細線（1px）分隔，粗線（3px）只用於大區塊的頁首。 */
+/* 設計字型（授權字型不放進 repo；展場電腦需安裝，或把檔案放進 fonts/） */
+@font-face{font-family:'B2BB Latin';src:local('Mono Spec Variable'),local('MonoSpecVariable-Regular'),url('../fonts/MonoSpec-Variable.ttf') format('truetype');font-weight:300 700;font-display:swap}
+@font-face{font-family:'B2BB CJK';src:local('Unwrapping Compo Text Grid'),local('UnwrappingCompoTextGrid-Regular'),url('../fonts/Unwrapping-compo-text-grid.otf') format('opentype');font-weight:100 900;font-display:swap}
 :root{
   --bg:#a3b1d8; --blue:#a3b1d8; --blue-l:#d4dbef; --blue-xl:#e7ebf6;
   --paper:#f5f5f3; --white:#fff; --g1:#ebebe8; --g2:#d6d6d2; --g3:#a6a6a2; --g4:#6c6c69; --ink:#0b0b0b;
   --line:rgba(0,0,0,.14);
-  --f-num:'Inter Tight','Helvetica Neue',Arial,sans-serif;
-  --f-mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
-  --f-zh:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+  --f-num:'B2BB Latin','B2BB CJK','Inter Tight','Helvetica Neue',Arial,sans-serif;
+  --f-mono:'B2BB Latin','B2BB CJK','JetBrains Mono',ui-monospace,Menlo,monospace;
+  --f-zh:'B2BB Latin','B2BB CJK','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
   --r-panel:44px; --r-card:22px; --r-chip:999px;
   --u:clamp(6px,0.74vh,10px); /* 8px 基準單位，依螢幕高度縮放 */
 }
@@ -174,3 +177,11 @@ body.preview-sheet #print-sheet{display:block;position:fixed;inset:0;margin:auto
   #print-sheet{display:block!important;padding:8mm;width:100%}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+/* 設計字型（等寬數字較寬）微調 */
+.num{letter-spacing:-.09em}
+.ttl h1{white-space:nowrap}
+#test-system .head{gap:calc(var(--u)*1.8)}
+#test-system .num{font-size:clamp(60px,9.4vh,104px)}
+#test-system .ttl h1{font-size:clamp(26px,4vh,44px);letter-spacing:.12em}
+#test-system .en{letter-spacing:.16em}
+.huge,.timer,.photo-idx,.pole b,.qbig{letter-spacing:-.08em}

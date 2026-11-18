@@ -1,2 +1,7 @@
 node_modules/
 .DS_Store
+# 授權字型：不可公開散布，只放在展場電腦本機（見 README「字型」）
+fonts/*.ttf
+fonts/*.otf
+fonts/*.woff
+fonts/*.woff2

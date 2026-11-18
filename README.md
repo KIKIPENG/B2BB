@@ -51,6 +51,6 @@
 
 ## 排版與動態
 
-- 字體：Inter Tight（數字、英文）、JetBrains Mono（小標籤）、Noto Sans TC（中文），經 Google Fonts 載入；離線時退回系統字型（Mac 為 PingFang TC）。展場若無網路，建議把字型檔下載放進專案。
+- 字體：Mono Spec Variable（英文、數字）＋ Unwrapping Compo Text Grid（中文）。**這兩套是授權字型，不放進 repo、也不會出現在 GitHub Pages 上**（中文字型註明僅限個人使用、不可散布）。展場電腦請安裝這兩套字型，或把檔案放進 `fonts/`，網頁會自動使用。沒有安裝時退回 Inter Tight／JetBrains Mono／Noto Sans TC。
 - 排版規則寫在 `css/style.css` 開頭註解：巨大細數字 × 極小標籤、卡片左上標題＋灰色副標、細線分隔。
 - 動態：`js/motion.js`，使用 GSAP 3（`js/vendor/gsap.min.js`，本機檔，離線可用）。開場依序進場、切換畫面錯落進場、數字滾動、雷達圖由中心展開、錄音音量條。系統設定「減少動態」時自動關閉。
