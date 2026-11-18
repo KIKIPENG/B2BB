@@ -180,9 +180,11 @@ body.preview-sheet #print-sheet{display:block;position:fixed;inset:0;margin:auto
 /* 設計字型（等寬數字較寬）微調 */
 .num{letter-spacing:-.09em}
 .ttl h1{white-space:nowrap}
-#test-system .head{gap:calc(var(--u)*1.8)}
-#test-system .num{font-size:clamp(60px,9.4vh,104px)}
-#test-system .ttl h1{font-size:clamp(26px,4vh,44px);letter-spacing:.12em}
-#test-system .en{letter-spacing:.16em}
+/* 03／04 標題列統一比例：同字級、同字距、同高度，橫線對齊 */
+.head{gap:calc(var(--u)*1.8);height:var(--head-h);align-items:flex-end;box-sizing:content-box}
+:root{--head-h:clamp(56px,8.8vh,98px)}
+.num{font-size:clamp(60px,9.4vh,104px)}
+.ttl h1{font-size:clamp(26px,4vh,44px);letter-spacing:.12em}
+.ttl .en{letter-spacing:.16em}
 .huge,.timer,.photo-idx,.pole b,.qbig{letter-spacing:-.08em}
-.logo{margin-left:auto;align-self:flex-end;height:clamp(48px,7.4vh,80px);width:auto;display:block;margin-bottom:4px}
+.logo{margin-left:auto;align-self:flex-end;height:clamp(40px,6.2vh,68px);width:auto;display:block;margin-bottom:4px}
