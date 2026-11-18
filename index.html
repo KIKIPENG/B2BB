@@ -34,19 +34,51 @@
       <div class="doc">
         <div class="doc-head"><span>INVESTIGATION DOCUMENT</span><span id="record-id">RECORD ID BTB-009-01</span></div>
         <h1>這張影像隱藏了什麼？</h1>
-        <p>開啟一個場景檔案，檢視其中的線索，並在右側檢查器中記錄你的推測。每次送出都會成為一筆新的調查紀錄。</p>
+        <p>開啟一個場景檔案，檢視其中的線索，並對著麥克風說出你的推測。每次送出都會成為一筆新的調查紀錄。</p>
       </div>
     </section>
 
     <aside id="inspector">
-      <div class="panel-title"><span>INSPECTOR / ANNOTATION</span><span id="dirty">● UNSAVED</span></div>
+      <div class="panel-title"><span>INSPECTOR / VOICE</span><span id="dirty">● EMPTY</span></div>
       <h2 id="sel-title">SCN_01.JPG</h2>
       <div id="sel-meta" class="mini"></div>
-      <form id="scene-form" autocomplete="off"></form>
+
+      <div class="block">
+        <div class="lbl">語音描述 / VOICE INPUT</div>
+        <p class="prompt">請看著照片，對麥克風說出：你認為這裡發生了什麼事？在哪裡？是什麼事件？</p>
+        <div class="rec-row">
+          <button type="button" id="btn-rec" class="rec">● 開始說話</button>
+          <span id="rec-timer" class="mono">00:00</span>
+          <span id="meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        </div>
+        <div class="lbl">逐字稿 / TRANSCRIPT</div>
+        <textarea id="transcript" rows="4" placeholder="你說的話會出現在這裡……"></textarea>
+        <div class="row2">
+          <button type="button" id="btn-redo">重錄 REDO</button>
+          <button type="button" id="btn-organize" class="primary">整理成描述 →</button>
+        </div>
+      </div>
+
+      <div class="block" id="ai-block">
+        <div class="lbl">AI 整理結果 / DESCRIPTION <span id="ai-state" class="mono"></span></div>
+        <dl id="ai-fields">
+          <dt>猜想</dt><dd id="ai-guess">—</dd>
+          <dt>想像位置</dt><dd id="ai-location">—</dd>
+          <dt>想像事件</dt><dd id="ai-story">—</dd>
+        </dl>
+        <div class="lbl">這張照片的描述 / SUMMARY</div>
+        <p id="ai-summary" class="summary">—</p>
+      </div>
+
+      <div class="block" id="other-block">
+        <div class="lbl">另一位觀眾的描述 / ANOTHER VIEW</div>
+        <p id="other-text" class="summary">歸檔後，這裡會出現另一位觀眾針對同一張照片的描述。</p>
+      </div>
+
       <div class="settings mini">
         <div>DESTINATION &nbsp;/UNRESOLVED</div>
         <div>ACCESS &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PUBLIC EXHIBITION</div>
-        <div>STATUS &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="status">DRAFT</span></div>
+        <div>STATUS &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="status">EMPTY</span></div>
       </div>
       <div class="actions">
         <button type="button" id="btn-draft">SAVE DRAFT</button>
@@ -99,11 +131,16 @@
   </section>
 </main>
 
+<!-- 列印單（點陣印表機，黑白）。畫面上平時隱藏；?state=sheet 可預覽 -->
+<section id="print-sheet" aria-hidden="true"></section>
+
 <script src="js/config.js"></script>
 <script src="js/scoring.js"></script>
 <script src="js/radar.js"></script>
 <script src="js/scene.js"></script>
 <script src="js/test.js"></script>
+<script src="js/print.js"></script>
+<script src="js/demo.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

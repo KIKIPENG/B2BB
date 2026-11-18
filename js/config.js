@@ -64,23 +64,26 @@
     },
     closing: '你剛剛評分的，並不是垃圾桶，而是你看待別人日常的方式。這份結果只代表此刻的你，不是結論。',
 
-    // 場景系統：9 張場景。圖片放 assets/scenes/，找不到會顯示佔位圖。
-    scenes: [
-      { id: 'SCN_01', src: 'assets/scenes/scn_01.jpg', meta: 'UNKNOWN LOCATION' },
-      { id: 'SCN_02', src: 'assets/scenes/scn_02.jpg', meta: 'UNKNOWN LOCATION' },
-      { id: 'SCN_03', src: 'assets/scenes/scn_03.jpg', meta: 'UNKNOWN LOCATION' },
-      { id: 'SCN_04', src: 'assets/scenes/scn_04.jpg', meta: 'UNKNOWN LOCATION' },
-      { id: 'SCN_05', src: 'assets/scenes/scn_05.jpg', meta: 'UNKNOWN LOCATION' },
-      { id: 'SCN_06', src: 'assets/scenes/scn_06.jpg', meta: 'UNKNOWN LOCATION' },
-      { id: 'SCN_07', src: 'assets/scenes/scn_07.jpg', meta: 'UNKNOWN LOCATION' },
-      { id: 'SCN_08', src: 'assets/scenes/scn_08.jpg', meta: 'UNKNOWN LOCATION' },
-      { id: 'SCN_09', src: 'assets/scenes/scn_09.jpg', meta: 'UNKNOWN LOCATION' }
-    ],
-    sceneFields: [
-      { key: 'guess',    label: '猜想',     hint: '你認為照片裡正在發生什麼？', rows: 3 },
-      { key: 'location', label: '想像位置', hint: '你想像這個場景發生在哪裡？', rows: 3 },
-      { key: 'story',    label: '想像事件', hint: '描述你看見的線索、人物、聲音與可能發生的故事……', rows: 6 }
-    ]
+    // 場景系統：10 張場景。圖片放 assets/scenes/scn_01.jpg … scn_10.jpg，缺圖顯示佔位圖。
+    scenes: [1,2,3,4,5,6,7,8,9,10].map(function (n) {
+      var id = 'SCN_' + (n < 10 ? '0' : '') + n;
+      return { id: id, src: 'assets/scenes/' + id.toLowerCase() + '.jpg', meta: 'UNKNOWN LOCATION' };
+    }),
+
+    // 語音與 AI（見 README「語音與 AI」）
+    speech: { lang: 'zh-TW', maxSec: 60 },
+    ai: {
+      endpoint: '', // 空白 = 離線模式（僅做簡單斷句）。填入你的後端網址後，會以 POST {scene, transcript} 呼叫，回傳 {guess, location, story, summary}
+      timeoutMs: 15000
+    },
+    // 沒有其他觀眾紀錄時，用這裡的範例描述（⚠️ 範例，請替換成真實內容）
+    seedDescriptions: {
+      SCN_01: { summary: '我覺得這是深夜末班車前的月台，一個人在等車，廣播剛剛停了，整個空間很安靜，大概在某個郊區的轉運站。' }
+    },
+    seedFallback: '（尚無其他觀眾針對這張照片的描述。這裡將顯示另一位觀眾的版本。）',
+
+    // 列印（點陣印表機，黑白）。⚠️ 紙張尺寸待確認：中一刀暫設 241 × 140 mm
+    print: { widthMm: 241, heightMm: 140, key: 'p' }
   };
   root.B2BB = root.B2BB || {};
   root.B2BB.CONFIG = CONFIG;

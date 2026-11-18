@@ -1,7 +1,7 @@
 /* 條碼心理測驗（右 30%）：狀態機 idle → rate → (idle…) → confirm → loading → result */
 (function (root) {
   var CFG = root.B2BB.CONFIG, SC = root.B2BB.scoring;
-  var state = 'idle', answers = {}, pending = null, idleTimer = null;
+  var state = 'idle', answers = {}, pending = null, idleTimer = null, last = null;
   function $(id) { return document.getElementById(id); }
   function qById(id) { return CFG.questions.filter(function (q) { return q.id === id; })[0]; }
   function count() { return Object.keys(answers).length; }
@@ -59,23 +59,29 @@
 
   function analyze() {
     show('loading'); status('分析中……');
-    setTimeout(function () {
-      var r = SC.analyze(answers), info = r.info;
-      root.B2BB.radar.draw($('radar'), r.scores, CFG.poles);
-      $('res-en').textContent = info.en; $('res-name').textContent = info.name;
-      $('res-body').textContent = info.body; $('res-back').textContent = info.back;
-      $('res-closing').textContent = CFG.closing;
-      $('res-scores').textContent = CFG.poles.map(function (p) { return p.zh + ' ' + r.scores[p.id].toFixed(1); }).join('　');
-      show('result'); status('分析完成');
-      try { var log = JSON.parse(localStorage.getItem('b2bb.results.v1') || '[]'); log.push({ ts: Date.now(), answers: answers, result: r.result }); localStorage.setItem('b2bb.results.v1', JSON.stringify(log)); } catch (e) {}
-    }, 2400);
+    setTimeout(function () { showResult(SC.analyze(answers)); }, 2400);
+  }
+  function showResult(r) {
+    var info = r.info; last = r;
+    root.B2BB.radar.draw($('radar'), r.scores, CFG.poles);
+    $('res-en').textContent = info.en; $('res-name').textContent = info.name;
+    $('res-body').textContent = info.body; $('res-back').textContent = info.back;
+    $('res-closing').textContent = CFG.closing;
+    $('res-scores').textContent = CFG.poles.map(function (p) { return p.zh + ' ' + r.scores[p.id].toFixed(1); }).join('　');
+    show('result'); status('分析完成。按 P 列印結果單');
+    try { var log = JSON.parse(localStorage.getItem('b2bb.results.v1') || '[]'); log.push({ ts: Date.now(), answers: answers, result: r.result }); localStorage.setItem('b2bb.results.v1', JSON.stringify(log)); } catch (e) {}
   }
 
   function reset() {
     var had = count() > 0 || state === 'result';
-    answers = {}; pending = null; show('idle'); status('請掃描條碼');
+    answers = {}; pending = null; last = null; show('idle'); status('請掃描條碼'); if (had && root.B2BB.scene) root.B2BB.scene.newVisitor();
     if (had) { var n = $('session-no'); n.textContent = ('000' + (parseInt(n.textContent, 10) + 1)).slice(-3); }
   }
   function init() { show('idle'); bumpIdle(); }
-  root.B2BB.test = { init: init, onScan: onScan, onKey: onKey, reset: reset };
+  function demoFill(vals) {
+    CFG.questions.forEach(function (q, i) { answers[q.id] = vals[i]; });
+    var r = SC.analyze(answers); show('result'); showResult(r);
+    try { localStorage.removeItem('b2bb.results.v1'); } catch (e) {}
+  }
+  root.B2BB.test = { init: init, onScan: onScan, onKey: onKey, reset: reset, getResult: function () { return last; }, getState: function () { return state; }, demoFill: demoFill };
 })(window);

@@ -29,6 +29,7 @@
     } else if (e.key !== 'Escape' && e.key !== 'Backspace') { return; }
 
     if (isField(el) && e.key !== 'Escape') return;
+    if (e.key.toLowerCase() === root.B2BB.CONFIG.print.key && !/^q/i.test(burst)) { root.B2BB.print.print(); return; }
     root.B2BB.test.onKey(e);
   }, true);
 
