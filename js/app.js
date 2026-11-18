@@ -34,6 +34,6 @@
   }, true);
 
   document.addEventListener('DOMContentLoaded', function () {
-    root.B2BB.scene.init(); root.B2BB.test.init();
+    root.B2BB.scene.init(); root.B2BB.test.init(); if (root.B2BB.motion && !/state=/.test(location.search)) root.B2BB.motion.intro();
   });
 })(window);

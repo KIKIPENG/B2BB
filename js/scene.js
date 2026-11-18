@@ -22,12 +22,13 @@
   var LABEL = { empty: 'EMPTY', recording: '● RECORDING', transcribed: 'TRANSCRIBED', organizing: 'ORGANIZING', organized: 'READY', archived: 'ARCHIVED' };
   function setState(s) {
     state = s;
-    var st = $('scene-state'); st.textContent = LABEL[s]; st.className = 'pill state ' + s;
+    var st = $('scene-state'); st.textContent = LABEL[s]; st.className = 'tag ' + s;
     var rb = $('btn-rec'); rb.classList.toggle('on', s === 'recording');
     rb.textContent = s === 'recording' ? '■ 停止' : '● 開始說話';
-    $('meter').classList.toggle('on', s === 'recording');
+    var M = root.B2BB.motion; if (M) M.meter(s === 'recording');
     $('btn-organize').disabled = !($('transcript').value.trim()) || s === 'recording' || s === 'organizing';
     $('btn-archive').disabled = s !== 'organized';
+    $('btn-archive').textContent = s === 'archived' ? '已歸檔 Archived ✓' : '歸檔 Archive Record →';
     $('btn-redo').disabled = s === 'empty' || s === 'recording';
     $('ai-state').textContent = s === 'organizing' ? '整理中…' : '';
   }
@@ -40,7 +41,7 @@
       if (i === current) return;
       var b = document.createElement('button'); b.type = 'button';
       var done = arch.some(function (a) { return a.scene === s.id && a.visitor === visitor; });
-      b.className = 'thumb' + (done ? ' done' : ''); b.title = s.id;
+      b.className = 'thumb' + (done ? ' done' : ''); b.title = s.id; b.setAttribute('data-no', pad(i + 1));
       b.appendChild(img(s.src, s.id));
       b.addEventListener('click', function () { if (state === 'recording') stopRec(); open(i); });
       g.appendChild(b);
@@ -62,7 +63,8 @@
   function open(i) {
     current = i; var s = sc(), d = draft[s.id] || {};
     var im = $('scene-img'); im.onerror = function () { im.onerror = null; im.src = placeholder(s.id); }; im.src = s.src;
-    $('photo-tag').textContent = s.id + ' · ' + pad(i + 1) + '/' + pad(CFG.scenes.length);
+    $('photo-tag').textContent = s.id; $('photo-no').textContent = pad(i + 1);
+    if (root.B2BB.motion) root.B2BB.motion.swapPhoto(im);
     fill(d); finalText = d.transcript || '';
     $('other-text').textContent = '歸檔後，這裡會出現另一位觀眾針對同一張照片的描述。'; other = null;
     setState(d.archived ? 'archived' : d.summary ? 'organized' : d.transcript ? 'transcribed' : 'empty');
@@ -132,6 +134,7 @@
   function newVisitor() { visitor++; draft = {}; mine = null; other = null; open(0); }
 
   function init() {
+    var m = $('meter'); for (var k = 0; k < 28; k++) m.appendChild(document.createElement('i'));
     open(0);
     $('btn-rec').addEventListener('click', function () { state === 'recording' ? stopRec() : startRec(); });
     $('btn-redo').addEventListener('click', redo);

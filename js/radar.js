@@ -13,19 +13,21 @@
       svg.appendChild(el('polygon', { points: '0,0 ' + a.join(',') + ' ' + b.join(','), fill: mono ? 'none' : 'rgba(255,255,255,.55)' }));
     }
     for (var ring = 1; ring <= 5; ring++) {
-      svg.appendChild(el('polygon', { points: [0, 1, 2, 3].map(function (i) { return pt(i, ring).join(','); }).join(' '), fill: 'none', stroke: '#000', 'stroke-width': ring === 5 ? 1.4 : .4 }));
+      svg.appendChild(el('polygon', { 'class': 'ring', points: [0, 1, 2, 3].map(function (i) { return pt(i, ring).join(','); }).join(' '), fill: 'none', stroke: '#000', 'stroke-width': ring === 5 ? 1 : .35, 'stroke-dasharray': ring === 5 || mono ? 'none' : '2 3' }));
     }
     for (var i = 0; i < 4; i++) {
       var p = pt(i, 5);
       svg.appendChild(el('line', { x1: 0, y1: 0, x2: p[0], y2: p[1], stroke: '#000', 'stroke-width': .6 }));
-      var lx = p[0] * 1.2 + (i === 3 ? -4 : i === 1 ? 4 : 0), ly = p[1] * 1.2 + (i === 0 ? -4 : i === 2 ? 12 : 4);
-      svg.appendChild(el('text', { x: lx, y: ly, 'text-anchor': i === 1 ? 'start' : i === 3 ? 'end' : 'middle', 'font-size': 14, 'font-weight': 700, 'font-family': 'sans-serif' }, poles[i].zh));
+      var lx = p[0] * 1.14 + (i === 3 ? -4 : i === 1 ? 4 : 0), ly = p[1] * 1.14 + (i === 0 ? -14 : i === 2 ? 10 : 0);
+      svg.appendChild(el('text', { x: lx, y: ly, 'text-anchor': i === 1 ? 'start' : i === 3 ? 'end' : 'middle', 'font-size': 13, 'font-weight': 400, 'letter-spacing': '2' }, poles[i].zh));
+      svg.appendChild(el('text', { x: lx, y: ly + 12, 'text-anchor': i === 1 ? 'start' : i === 3 ? 'end' : 'middle', 'font-size': 7, 'font-family': 'monospace', 'letter-spacing': '1.2', fill: '#6c6c69' }, poles[i].en));
     }
     var pts = poles.map(function (p, i) { return pt(i, scores[p.id]); });
-    svg.appendChild(el('polygon', { points: pts.map(function (x) { return x.join(','); }).join(' '), fill: mono ? 'rgba(0,0,0,.25)' : 'rgba(163,177,216,.65)', stroke: '#000', 'stroke-width': 2 }));
+    var g = el('g', { id: 'shape' }); svg.appendChild(g);
+    g.appendChild(el('polygon', { points: pts.map(function (x) { return x.join(','); }).join(' '), fill: mono ? 'rgba(0,0,0,.25)' : 'rgba(163,177,216,.7)', stroke: '#000', 'stroke-width': 1.5, 'stroke-linejoin': 'round' }));
     pts.forEach(function (x, i) {
-      svg.appendChild(el('circle', { cx: x[0], cy: x[1], r: 5.5, fill: mono ? '#000' : (['#fff', '#c9d2ea', '#cfcfcc', '#a3b1d8'][i]), stroke: '#000', 'stroke-width': 1.5 }));
-      svg.appendChild(el('text', { x: x[0] + 7, y: x[1] - 6, 'font-size': 10, 'font-family': 'monospace' }, scores[poles[i].id].toFixed(1)));
+      svg.appendChild(el('circle', { 'class': 'node', cx: x[0], cy: x[1], r: 4.5, fill: mono ? '#000' : (['#fff', '#c9d2ea', '#cfcfcc', '#a3b1d8'][i]), stroke: '#000', 'stroke-width': 1.5 }));
+      svg.appendChild(el('text', { 'class': 'node', x: x[0] + 8, y: x[1] - 7, 'font-size': 9, 'font-family': 'monospace' }, scores[poles[i].id].toFixed(1)));
     });
   }
   root.B2BB = root.B2BB || {}; root.B2BB.radar = { draw: draw };

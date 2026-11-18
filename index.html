@@ -4,115 +4,165 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>背面調查局｜UNSEEN ARCHIVE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500;700&display=swap">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <main id="stage">
 
-  <!-- 左：04 場景對話區 -->
+  <!-- ===================== 左：04 場景對話區 ===================== -->
   <section id="scene-system" class="panel" aria-label="場景對話區">
     <header class="head">
       <span class="num">04</span>
       <div class="ttl"><h1>場景對話區</h1><span class="en">SCENE / COMMUNICATION</span></div>
-      <div class="head-right"><span class="pill">背面調查局</span><span class="pill dark" id="session">SESSION_<span id="session-no">001</span></span></div>
+      <dl class="meta">
+        <div><dt>Bureau</dt><dd>背面調查局</dd></div>
+        <div><dt>Session</dt><dd id="session">№ <span id="session-no">001</span></dd></div>
+        <div><dt>Files</dt><dd>10 Scenes</dd></div>
+      </dl>
     </header>
 
     <div class="media">
-      <figure id="photo"><img id="scene-img" alt=""><figcaption><span class="pill" id="photo-tag">SCN_01 · 01/10</span></figcaption></figure>
+      <figure id="photo">
+        <img id="scene-img" alt="">
+        <figcaption>
+          <span class="chip" id="photo-tag">SCN_01</span>
+          <span class="photo-idx"><b id="photo-no">01</b><small>/10</small></span>
+        </figcaption>
+      </figure>
       <div id="scene-grid" aria-label="其他場景"></div>
     </div>
 
-    <p id="prompt-line" class="prompt-line">請看著照片，對麥克風說出：你認為這裡發生了什麼事？在哪裡？是什麼事件？</p>
+    <div class="prompt">
+      <span class="k">Prompt<br><em>提示</em></span>
+      <p id="prompt-line">請看著照片，對麥克風說出：<br><b>你認為這裡發生了什麼事？在哪裡？是什麼事件？</b></p>
+    </div>
 
     <div class="work">
-      <div class="card" id="voice-card">
-        <div class="card-top"><span class="pill">語音 VOICE</span><span id="scene-state" class="pill state">EMPTY</span></div>
-        <div class="rec-row">
-          <button type="button" id="btn-rec" class="rec">● 開始說話</button>
-          <span id="rec-timer" class="timer">00:00</span>
-          <span id="meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <article class="card" id="voice-card">
+        <div class="card-top">
+          <div class="cap">Voice.<span>語音描述</span></div>
+          <span id="scene-state" class="tag">EMPTY</span>
         </div>
-        <label class="lbl" for="transcript">逐字稿 TRANSCRIPT</label>
+        <div class="timer-row">
+          <span id="rec-timer" class="timer">00:00</span>
+          <span id="meter" aria-hidden="true"></span>
+        </div>
+        <button type="button" id="btn-rec" class="btn btn-rec">● 開始說話</button>
+        <label class="k sm" for="transcript">Transcript 逐字稿</label>
         <textarea id="transcript" placeholder="你說的話會出現在這裡……"></textarea>
         <div class="row2">
-          <button type="button" id="btn-redo">重錄 REDO</button>
-          <button type="button" id="btn-organize" class="solid">整理成描述 →</button>
+          <button type="button" id="btn-redo" class="btn">重錄</button>
+          <button type="button" id="btn-organize" class="btn solid">整理成描述 →</button>
         </div>
-      </div>
+      </article>
 
-      <div class="card tint1" id="ai-block">
-        <div class="card-top"><span class="pill">AI 整理 DESCRIPTION</span><span id="ai-state" class="mono small"></span></div>
+      <article class="card" id="ai-block">
+        <div class="card-top">
+          <div class="cap">Description.<span>AI 整理結果</span></div>
+          <span id="ai-state" class="tag ghost"></span>
+        </div>
         <dl id="ai-fields">
-          <dt>猜想</dt><dd id="ai-guess">—</dd>
-          <dt>想像位置</dt><dd id="ai-location">—</dd>
-          <dt>想像事件</dt><dd id="ai-story">—</dd>
+          <div><dt><i>01</i>猜想</dt><dd id="ai-guess">—</dd></div>
+          <div><dt><i>02</i>位置</dt><dd id="ai-location">—</dd></div>
+          <div><dt><i>03</i>事件</dt><dd id="ai-story">—</dd></div>
         </dl>
-        <div class="lbl">這張照片的描述 SUMMARY</div>
+        <div class="k sm">Summary 這張照片的描述</div>
         <p id="ai-summary" class="summary">—</p>
-        <button type="button" id="btn-archive" class="solid wide">ARCHIVE RECORD →</button>
-      </div>
+        <button type="button" id="btn-archive" class="btn solid wide">歸檔 Archive Record →</button>
+      </article>
 
-      <div class="card tint2" id="other-block">
-        <div class="card-top"><span class="pill">另一位觀眾 ANOTHER VIEW</span></div>
-        <p id="other-text" class="summary big-text">歸檔後，這裡會出現另一位觀眾針對同一張照片的描述。</p>
-        <div id="scene-toast" class="mono small" aria-live="polite"></div>
-      </div>
+      <article class="card blue" id="other-block">
+        <div class="card-top">
+          <div class="cap">Another View.<span>另一位觀眾的描述</span></div>
+          <span class="tag ghost">≠ YOU</span>
+        </div>
+        <p id="other-text" class="quote">歸檔後，這裡會出現另一位觀眾針對同一張照片的描述。</p>
+        <div id="scene-toast" class="toast" aria-live="polite"></div>
+      </article>
     </div>
   </section>
 
-  <!-- 右：03 觀察紀錄區 -->
-  <section id="test-system" class="panel" aria-label="觀察紀錄區">
+  <!-- ===================== 右：03 觀察紀錄區 ===================== -->
+  <section id="test-system" class="panel" data-state="idle" aria-label="觀察紀錄區">
     <header class="head">
       <span class="num">03</span>
       <div class="ttl"><h1>觀察紀錄區</h1><span class="en">OBSERVATION / OPERATION</span></div>
     </header>
 
+    <div class="count-row">
+      <div class="count">
+        <span class="k">Answered<br><em>已評分</em></span>
+        <div class="huge"><b id="count-now">0</b><small>/10</small></div>
+      </div>
+      <span class="tag" id="test-tag">STANDBY</span>
+    </div>
+
     <div id="view-idle" class="view active">
-      <div class="count-card"><span class="pill">進度 PROGRESS</span><div class="huge"><b id="count-now">0</b><small>/10</small></div></div>
-      <div class="card tint3"><span class="pill">待機 STANDBY</span><p class="big-text">請掃描記錄表上的條碼</p><p class="mute">對照垃圾桶畫面，掃描題目條碼後按 1–5 評分。</p><div class="scanline"></div></div>
+      <div class="card blue-l now">
+        <div class="cap">Scan.<span>掃描記錄表上的題目條碼</span></div>
+        <p class="lead">對照垃圾桶畫面，<br>掃描條碼後按 <b>1–5</b> 評分。</p>
+        <div class="scanline"></div>
+      </div>
     </div>
 
     <div id="view-rate" class="view">
-      <div class="count-card"><span class="pill" id="rate-qid">Q01</span><div class="huge"><b id="count-rate">0</b><small>/10</small></div></div>
-      <div class="card tint3"><span class="pill">題目 QUESTION</span><p class="big-text" id="rate-text"></p></div>
-      <div id="rate-scale"></div>
-      <p id="rate-hint" class="mute">請按數字鍵 1–5</p>
+      <div class="card blue-l now">
+        <div class="card-top"><div class="cap">Question.<span>題目</span></div><span class="qbig" id="rate-qid">Q01</span></div>
+        <p class="lead" id="rate-text"></p>
+        <div id="rate-scale"></div>
+        <p id="rate-hint" class="hint">請按數字鍵 1–5</p>
+      </div>
+      <span id="count-rate" hidden>0</span>
     </div>
 
     <div id="view-confirm" class="view">
-      <div class="count-card"><span class="pill">完成 DONE</span><div class="huge"><b>10</b><small>/10</small></div></div>
-      <div class="card tint3"><p class="big-text">10 題已完成</p><p class="mute">按 Enter 產生分析。如需修改，請重新掃描該題。</p></div>
+      <div class="card blue-l now">
+        <div class="cap">Complete.<span>10 題已完成</span></div>
+        <p class="lead">按 <b>Enter</b> 產生分析。<br>如需修改，請重新掃描該題。</p>
+      </div>
     </div>
 
     <div id="view-loading" class="view">
-      <div class="card tint3"><span class="pill">分析中 ANALYZING</span><p class="big-text">正在比對你的觀察……</p><div class="bar"><i></i></div></div>
+      <div class="card blue-l now">
+        <div class="cap">Analyzing.<span>正在比對你的觀察</span></div>
+        <div class="bar"><i></i></div>
+      </div>
     </div>
 
+    <ol id="qlist" aria-label="題目與分數"></ol>
+
     <div id="view-result" class="view">
-      <div class="type-row"><span class="pill dark" id="res-en"></span><h2 id="res-name"></h2></div>
+      <div class="type-row">
+        <span class="k">Observer Type<br><em>觀察者類型</em></span>
+        <div><h2 id="res-name"></h2><span class="en" id="res-en"></span></div>
+      </div>
       <div class="radar-card"><svg id="radar" viewBox="-175 -150 350 300" role="img" aria-label="四極雷達圖"></svg></div>
       <div id="pole-cards"></div>
       <p id="res-body" class="res-body"></p>
-      <div class="back"><span class="pill">背面提示</span><b id="res-back"></b></div>
+      <div class="back"><span class="k">Reverse<br><em>背面提示</em></span><b id="res-back"></b></div>
       <p class="closing" id="res-closing"></p>
-      <div class="mono small mute">按 P 列印結果單　·　按 0 重新開始</div>
       <div id="res-scores" hidden></div>
     </div>
 
-    <div class="foot">
-      <div id="progress" aria-label="進度"></div>
+    <footer class="foot">
       <div id="status-line" class="status" aria-live="polite">請掃描條碼</div>
-    </div>
+      <div class="keys"><kbd>P</kbd> 列印　<kbd>0</kbd> 重來</div>
+    </footer>
+    <div id="progress" hidden></div>
     <span id="progress-count" hidden>0 / 10</span>
   </section>
 </main>
 
-<!-- 列印單（點陣印表機，黑白）。畫面上平時隱藏；?state=sheet 可預覽 -->
 <section id="print-sheet" aria-hidden="true"></section>
 
+<script src="js/vendor/gsap.min.js"></script>
 <script src="js/config.js"></script>
 <script src="js/scoring.js"></script>
 <script src="js/radar.js"></script>
+<script src="js/motion.js"></script>
 <script src="js/scene.js"></script>
 <script src="js/test.js"></script>
 <script src="js/print.js"></script>
