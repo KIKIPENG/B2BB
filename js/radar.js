@@ -22,9 +22,9 @@
       svg.appendChild(el('text', { x: lx, y: ly, 'text-anchor': i === 1 ? 'start' : i === 3 ? 'end' : 'middle', 'font-size': 14, 'font-weight': 700, 'font-family': 'sans-serif' }, poles[i].zh));
     }
     var pts = poles.map(function (p, i) { return pt(i, scores[p.id]); });
-    svg.appendChild(el('polygon', { points: pts.map(function (x) { return x.join(','); }).join(' '), fill: mono ? 'rgba(0,0,0,.25)' : 'rgba(255,90,42,.28)', stroke: '#000', 'stroke-width': 2 }));
+    svg.appendChild(el('polygon', { points: pts.map(function (x) { return x.join(','); }).join(' '), fill: mono ? 'rgba(0,0,0,.25)' : 'rgba(163,177,216,.65)', stroke: '#000', 'stroke-width': 2 }));
     pts.forEach(function (x, i) {
-      svg.appendChild(el('circle', { cx: x[0], cy: x[1], r: 5.5, fill: mono ? '#000' : (['#ffd84d', '#a99bd0', '#ff5a2a', '#9fd9ad'][i]), stroke: '#000', 'stroke-width': 1.5 }));
+      svg.appendChild(el('circle', { cx: x[0], cy: x[1], r: 5.5, fill: mono ? '#000' : (['#fff', '#c9d2ea', '#cfcfcc', '#a3b1d8'][i]), stroke: '#000', 'stroke-width': 1.5 }));
       svg.appendChild(el('text', { x: x[0] + 7, y: x[1] - 6, 'font-size': 10, 'font-family': 'monospace' }, scores[poles[i].id].toFixed(1)));
     });
   }
