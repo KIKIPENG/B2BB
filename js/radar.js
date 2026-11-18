@@ -1,6 +1,6 @@
 /* SVG 雷達圖：上、右、下、左 = 物件、空間、事件、人物；半徑 1 分在中心、5 分在外圈 */
 (function (root) {
-  var NS = 'http://www.w3.org/2000/svg', R = 110;
+  var NS = 'http://www.w3.org/2000/svg', R = 105;
   var ANG = [-90, 0, 90, 180]; // 度
   function pt(i, v) { var r = R * (v - 1) / 4, a = ANG[i] * Math.PI / 180; return [r * Math.cos(a), r * Math.sin(a)]; }
   function el(n, attrs, text) { var e = document.createElementNS(NS, n); for (var k in attrs) e.setAttribute(k, attrs[k]); if (text) e.textContent = text; return e; }
@@ -10,10 +10,10 @@
     // 象限底（相鄰兩極之間）
     for (var q = 0; q < 4; q++) {
       var a = pt(q, 5), b = pt((q + 1) % 4, 5);
-      svg.appendChild(el('polygon', { points: '0,0 ' + a.join(',') + ' ' + b.join(','), fill: mono ? 'none' : (q % 2 ? '#d4d4d0' : '#e2e2de') }));
+      svg.appendChild(el('polygon', { points: '0,0 ' + a.join(',') + ' ' + b.join(','), fill: mono ? 'none' : 'rgba(255,255,255,.55)' }));
     }
     for (var ring = 1; ring <= 5; ring++) {
-      svg.appendChild(el('polygon', { points: [0, 1, 2, 3].map(function (i) { return pt(i, ring).join(','); }).join(' '), fill: 'none', stroke: '#000', 'stroke-width': ring === 5 ? 1.2 : .4 }));
+      svg.appendChild(el('polygon', { points: [0, 1, 2, 3].map(function (i) { return pt(i, ring).join(','); }).join(' '), fill: 'none', stroke: '#000', 'stroke-width': ring === 5 ? 1.4 : .4 }));
     }
     for (var i = 0; i < 4; i++) {
       var p = pt(i, 5);
@@ -22,9 +22,9 @@
       svg.appendChild(el('text', { x: lx, y: ly, 'text-anchor': i === 1 ? 'start' : i === 3 ? 'end' : 'middle', 'font-size': 14, 'font-weight': 700, 'font-family': 'sans-serif' }, poles[i].zh));
     }
     var pts = poles.map(function (p, i) { return pt(i, scores[p.id]); });
-    svg.appendChild(el('polygon', { points: pts.map(function (x) { return x.join(','); }).join(' '), fill: mono ? 'rgba(0,0,0,.25)' : 'rgba(143,163,217,.55)', stroke: '#000', 'stroke-width': 2 }));
+    svg.appendChild(el('polygon', { points: pts.map(function (x) { return x.join(','); }).join(' '), fill: mono ? 'rgba(0,0,0,.25)' : 'rgba(255,90,42,.28)', stroke: '#000', 'stroke-width': 2 }));
     pts.forEach(function (x, i) {
-      svg.appendChild(el('circle', { cx: x[0], cy: x[1], r: 4, fill: '#000' }));
+      svg.appendChild(el('circle', { cx: x[0], cy: x[1], r: 5.5, fill: mono ? '#000' : (['#ffd84d', '#a99bd0', '#ff5a2a', '#9fd9ad'][i]), stroke: '#000', 'stroke-width': 1.5 }));
       svg.appendChild(el('text', { x: x[0] + 7, y: x[1] - 6, 'font-size': 10, 'font-family': 'monospace' }, scores[poles[i].id].toFixed(1)));
     });
   }

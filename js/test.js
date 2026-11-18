@@ -10,6 +10,7 @@
     state = v;
     ['idle', 'rate', 'confirm', 'loading', 'result'].forEach(function (n) { $('view-' + n).classList.toggle('active', n === v); });
     $('progress-count').textContent = count() + ' / ' + CFG.questions.length;
+    $('count-now').textContent = count(); $('count-rate').textContent = count();
     renderProgress();
   }
   function status(msg, err) { var s = $('status-line'); s.textContent = msg; s.className = 'status' + (err ? ' err' : ''); }
@@ -68,6 +69,12 @@
     $('res-body').textContent = info.body; $('res-back').textContent = info.back;
     $('res-closing').textContent = CFG.closing;
     $('res-scores').textContent = CFG.poles.map(function (p) { return p.zh + ' ' + r.scores[p.id].toFixed(1); }).join('　');
+    var pc = $('pole-cards'); pc.innerHTML = '';
+    CFG.poles.forEach(function (p) {
+      var v = r.scores[p.id], d = document.createElement('div'); d.className = 'pole ' + p.id;
+      d.innerHTML = '<span class="pill">' + p.zh + ' ' + p.en + '</span><b>' + v.toFixed(1) + '</b><i><u style="width:' + Math.round((v - 1) / 4 * 100) + '%"></u></i>';
+      pc.appendChild(d);
+    });
     show('result'); status('分析完成。按 P 列印結果單');
     try { var log = JSON.parse(localStorage.getItem('b2bb.results.v1') || '[]'); log.push({ ts: Date.now(), answers: answers, result: r.result }); localStorage.setItem('b2bb.results.v1', JSON.stringify(log)); } catch (e) {}
   }

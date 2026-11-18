@@ -22,8 +22,7 @@
   var LABEL = { empty: 'EMPTY', recording: '● RECORDING', transcribed: 'TRANSCRIBED', organizing: 'ORGANIZING', organized: 'READY', archived: 'ARCHIVED' };
   function setState(s) {
     state = s;
-    $('dirty').textContent = '● ' + LABEL[s]; $('status').textContent = LABEL[s];
-    $('dirty').className = s === 'archived' ? 'saved' : '';
+    var st = $('scene-state'); st.textContent = LABEL[s]; st.className = 'pill state ' + s;
     var rb = $('btn-rec'); rb.classList.toggle('on', s === 'recording');
     rb.textContent = s === 'recording' ? '■ 停止' : '● 開始說話';
     $('meter').classList.toggle('on', s === 'recording');
@@ -33,24 +32,19 @@
     $('ai-state').textContent = s === 'organizing' ? '整理中…' : '';
   }
 
-  /* ---------- 清單與開啟 ---------- */
+  /* ---------- 大圖＋其餘 9 張縮圖 ---------- */
   function renderGrid() {
     var g = $('scene-grid'); g.innerHTML = '';
     var arch = loadArchive();
     CFG.scenes.forEach(function (s, i) {
+      if (i === current) return;
       var b = document.createElement('button'); b.type = 'button';
       var done = arch.some(function (a) { return a.scene === s.id && a.visitor === visitor; });
-      b.className = 'thumb' + (i === current ? ' sel' : '') + (done ? ' done' : '');
-      b.appendChild(img(s.src, s.id)); var sp = document.createElement('span'); sp.textContent = s.id + '.JPG'; b.appendChild(sp);
+      b.className = 'thumb' + (done ? ' done' : ''); b.title = s.id;
+      b.appendChild(img(s.src, s.id));
       b.addEventListener('click', function () { if (state === 'recording') stopRec(); open(i); });
       g.appendChild(b);
     });
-    $('scene-count').textContent = pad(CFG.scenes.length) + ' ITEMS';
-    var sub = {}; arch.forEach(function (a) { sub[a.scene] = 1; });
-    var n = Object.keys(sub).length;
-    $('col-unresolved').innerHTML = '+ UNRESOLVED <b>' + pad(CFG.scenes.length - n) + '</b>';
-    $('col-submitted').innerHTML = '+ SUBMITTED <b>' + pad(arch.length) + '</b>';
-    $('col-archived').innerHTML = '+ ARCHIVED <b>' + pad(arch.length) + '</b>';
   }
   function fill(d) {
     $('transcript').value = d.transcript || '';
@@ -68,10 +62,7 @@
   function open(i) {
     current = i; var s = sc(), d = draft[s.id] || {};
     var im = $('scene-img'); im.onerror = function () { im.onerror = null; im.src = placeholder(s.id); }; im.src = s.src;
-    $('scene-tab').textContent = s.id + '.JPG'; $('sel-title').textContent = s.id + '.JPG';
-    $('sel-meta').textContent = s.meta + ' / FILE ' + pad(i + 1) + ' OF ' + pad(CFG.scenes.length);
-    $('scene-caption').textContent = s.id + '.JPG  •  SELECTED';
-    $('record-id').textContent = 'RECORD ID BTB-009-' + pad(i + 1);
+    $('photo-tag').textContent = s.id + ' · ' + pad(i + 1) + '/' + pad(CFG.scenes.length);
     fill(d); finalText = d.transcript || '';
     $('other-text').textContent = '歸檔後，這裡會出現另一位觀眾針對同一張照片的描述。'; other = null;
     setState(d.archived ? 'archived' : d.summary ? 'organized' : d.transcript ? 'transcribed' : 'empty');
@@ -131,7 +122,6 @@
 
   /* ---------- 草稿 / 歸檔 / 重錄 ---------- */
   function redo() { delete draft[sc().id]; fill({}); $('transcript').value = ''; finalText = ''; $('rec-timer').textContent = '00:00'; setState('empty'); renderGrid(); }
-  function saveDraft() { var d = draft[sc().id] = draft[sc().id] || {}; d.transcript = $('transcript').value.trim(); toast('已儲存草稿'); }
   function archive() {
     var d = draft[sc().id]; if (!d || !d.summary) { toast('請先「整理成描述」'); return; }
     var rec_ = { scene: sc().id, visitor: visitor, ts: Date.now(), transcript: d.transcript, guess: d.guess, location: d.location, story: d.story, summary: d.summary };
@@ -146,7 +136,6 @@
     $('btn-rec').addEventListener('click', function () { state === 'recording' ? stopRec() : startRec(); });
     $('btn-redo').addEventListener('click', redo);
     $('btn-organize').addEventListener('click', organize);
-    $('btn-draft').addEventListener('click', saveDraft);
     $('btn-archive').addEventListener('click', archive);
     $('transcript').addEventListener('input', function () { if (state === 'empty') setState('transcribed'); setState(state === 'organized' ? 'transcribed' : state); });
   }
