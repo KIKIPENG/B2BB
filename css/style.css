@@ -185,3 +185,4 @@ body.preview-sheet #print-sheet{display:block;position:fixed;inset:0;margin:auto
 #test-system .ttl h1{font-size:clamp(26px,4vh,44px);letter-spacing:.12em}
 #test-system .en{letter-spacing:.16em}
 .huge,.timer,.photo-idx,.pole b,.qbig{letter-spacing:-.08em}
+.logo{margin-left:auto;align-self:flex-end;height:clamp(48px,7.4vh,80px);width:auto;display:block;margin-bottom:4px}

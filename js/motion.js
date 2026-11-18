@@ -10,7 +10,7 @@
   function intro() {
     if (!ok) return;
     G.from('.panel', { y: 24, opacity: 0, duration: 1, ease: EASE, stagger: .08 });
-    G.from('.head .num, .head .ttl > *, .meta > div', { y: 18, opacity: 0, duration: .9, ease: EASE, stagger: .04, delay: .15 });
+    G.from('.head .num, .head .ttl > *, .logo', { y: 18, opacity: 0, duration: .9, ease: EASE, stagger: .04, delay: .15 });
     G.from('#photo, .thumb', { opacity: 0, scale: .97, duration: .9, ease: EASE, stagger: .03, delay: .3 });
     G.from('.prompt, .work .card, .count-row, #view-idle .card, #qlist li', { y: 16, opacity: 0, duration: .8, ease: EASE, stagger: .03, delay: .45 });
   }
