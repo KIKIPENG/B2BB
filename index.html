@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>背面調查局｜UNSEEN ARCHIVE</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header id="topbar">
+  <span class="brand">背面調查局</span>
+  <span class="brand-en">BACK TO BACK BUREAU</span>
+  <span class="grow"></span>
+  <span id="session">UNSEEN_ARCHIVE / SESSION_<span id="session-no">001</span></span>
+</header>
+
+<main id="stage">
+  <!-- 左 70%：場景描述系統 -->
+  <section id="scene-system" aria-label="場景描述系統">
+    <aside id="scene-list">
+      <div class="panel-title"><span>FILES / SCENES</span><span id="scene-count">09 ITEMS</span></div>
+      <div id="scene-grid"></div>
+      <div class="collections">
+        <div class="mini">COLLECTIONS</div>
+        <div id="col-unresolved">+ UNRESOLVED <b>00</b></div>
+        <div id="col-submitted">+ SUBMITTED <b>00</b></div>
+        <div id="col-archived">+ ARCHIVED <b>00</b></div>
+      </div>
+    </aside>
+
+    <section id="scene-viewer">
+      <div class="viewer-bar"><span>IMAGE / EVIDENCE VIEWER</span><span id="scene-tab">SCN_01.JPG</span></div>
+      <div class="viewer-frame"><img id="scene-img" alt=""><div id="scene-caption"></div></div>
+      <div class="doc">
+        <div class="doc-head"><span>INVESTIGATION DOCUMENT</span><span id="record-id">RECORD ID BTB-009-01</span></div>
+        <h1>這張影像隱藏了什麼？</h1>
+        <p>開啟一個場景檔案，檢視其中的線索，並在右側檢查器中記錄你的推測。每次送出都會成為一筆新的調查紀錄。</p>
+      </div>
+    </section>
+
+    <aside id="inspector">
+      <div class="panel-title"><span>INSPECTOR / ANNOTATION</span><span id="dirty">● UNSAVED</span></div>
+      <h2 id="sel-title">SCN_01.JPG</h2>
+      <div id="sel-meta" class="mini"></div>
+      <form id="scene-form" autocomplete="off"></form>
+      <div class="settings mini">
+        <div>DESTINATION &nbsp;/UNRESOLVED</div>
+        <div>ACCESS &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PUBLIC EXHIBITION</div>
+        <div>STATUS &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="status">DRAFT</span></div>
+      </div>
+      <div class="actions">
+        <button type="button" id="btn-draft">SAVE DRAFT</button>
+        <button type="button" id="btn-archive" class="primary">ARCHIVE RECORD →</button>
+      </div>
+      <div id="scene-toast" class="mini" aria-live="polite"></div>
+    </aside>
+  </section>
+
+  <!-- 右 30%：條碼心理測驗系統 -->
+  <section id="test-system" aria-label="觀察記錄表測驗">
+    <div class="panel-title"><span>03 觀察紀錄表 / OBSERVATION</span><span id="progress-count">0 / 10</span></div>
+
+    <div id="view-idle" class="view active">
+      <div class="big">請掃描記錄表上的條碼</div>
+      <p>對照垃圾桶畫面，掃描題目條碼後按 1–5 評分。</p>
+      <div class="scanline"></div>
+    </div>
+
+    <div id="view-rate" class="view">
+      <div class="qid" id="rate-qid">Q01</div>
+      <div class="qtext" id="rate-text"></div>
+      <div id="rate-scale"></div>
+      <p id="rate-hint" class="hint">請按數字鍵 1–5</p>
+    </div>
+
+    <div id="view-confirm" class="view">
+      <div class="big">10 題已完成</div>
+      <p>按 Enter 產生分析。如需修改，請重新掃描該題。</p>
+    </div>
+
+    <div id="view-loading" class="view">
+      <div class="big">正在比對你的觀察……</div>
+      <div class="bar"><i></i></div>
+    </div>
+
+    <div id="view-result" class="view">
+      <svg id="radar" viewBox="-160 -160 320 320" role="img" aria-label="四極雷達圖"></svg>
+      <div class="type-en" id="res-en"></div>
+      <div class="type-name" id="res-name"></div>
+      <p id="res-body"></p>
+      <div class="back"><span>背面提示</span><b id="res-back"></b></div>
+      <div id="res-scores" class="mini"></div>
+      <p class="closing" id="res-closing"></p>
+      <div class="mini">按 0 重新開始</div>
+    </div>
+
+    <div id="progress" aria-label="進度"></div>
+    <div id="status-line" class="status" aria-live="polite">請掃描條碼</div>
+  </section>
+</main>
+
+<script src="js/config.js"></script>
+<script src="js/scoring.js"></script>
+<script src="js/radar.js"></script>
+<script src="js/scene.js"></script>
+<script src="js/test.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
