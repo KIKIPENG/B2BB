@@ -299,3 +299,9 @@ kbd{min-width:16px;height:16px}
 /* 依 kiki 指示：只刪 PROMPT／提示 與 ANSWERED／已評分，其餘副標保留 */
 .prompt{grid-template-columns:1fr}
 .count{grid-template-columns:auto}
+/* 題目清單間距：依 kiki 參考圖（列高 30px、編號欄 30px、進度線 65px、清單距上方卡片 15px、底列距清單 16px） */
+#qlist{margin-top:15px}
+#qlist li{grid-template-columns:30px 1fr 65px 12px;gap:10px;flex:none;height:30px;max-height:none}
+#qlist .s{text-align:right}
+.foot{padding-top:16px}
+@media (max-height:900px){.huge{font-size:72px}.lead{font-size:18px;line-height:1.45}.count-row{margin-top:calc(var(--u)*1.6)}.view{margin-top:calc(var(--u)*1.6)}}
