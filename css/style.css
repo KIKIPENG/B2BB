@@ -293,7 +293,9 @@ p,.quote,.summary,dd{text-wrap:pretty;line-break:strict}
 .status,.keys,kbd{font-size:12px}
 kbd{min-width:16px;height:16px}
 /* 移除多餘的小字副標（kiki 回饋）：英文標籤下方重複的中文說明、與卡片內文重複的說明 */
-.k em,.cap span,.pole .pk{display:none}
-#view-loading .cap span{display:block}   /* 保留：分析中卡片只有這一句說明 */
 .k.sm em,.k.sm{letter-spacing:.14em}
 .cap{line-height:1.2}
+
+/* 依 kiki 指示：只刪 PROMPT／提示 與 ANSWERED／已評分，其餘副標保留 */
+.prompt{grid-template-columns:1fr}
+.count{grid-template-columns:auto}
