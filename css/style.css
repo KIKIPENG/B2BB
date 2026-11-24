@@ -217,3 +217,72 @@ body.preview-sheet #print-sheet{display:block;position:fixed;inset:0;margin:auto
 #sim .sim-foot{margin-top:8px;font:400 11px var(--f-zh);letter-spacing:.06em;color:var(--g3)}
 @media print{#sim{display:none!important}}
 #sim .sim-btn{border-radius:18px}#sim .sim-btn.ghost{border-radius:var(--r-chip)}
+
+/* ======== 打磨（impeccable audit／polish）======== */
+/* 1. 對比：小字的灰色加深到 WCAG AA（紙色底 ≥4.5:1）；--g3 只留給線條與邊框 */
+:root{--t3:#6b6b66}
+.k em,.cap span,.tag.ghost,.huge small,.meta dt,.closing,.keys,#qlist .n,#ai-fields dt i,#transcript::placeholder,#sim .sim-k em,#sim .sim-foot{color:var(--t3)}
+.card.blue .cap span,.card.blue .tag.ghost{color:rgba(0,0,0,.66)}
+.huge small{color:#8a8a85}                       /* 大字級裝飾「/10」，3:1 即足夠 */
+.pole .pk{font-size:13px}
+.thumb.done::after{font-size:13px}
+
+/* 2. 文字換行：標題均衡、段落避免孤字；中文不拆在標點前 */
+h1,h2,.lead,.cap{text-wrap:balance}
+p,.quote,.summary,dd{text-wrap:pretty;line-break:strict}
+
+/* 3. 縮圖編號：原本用 difference 混色，在亮底照片上會消失，改成固定的小膠囊 */
+.thumb::before{left:8px;top:8px;mix-blend-mode:normal;color:var(--ink);background:rgba(255,255,255,.92);padding:2px 8px;border-radius:var(--r-chip);line-height:1.35;font-size:12px}
+
+/* 4. 右側：待機／確認／分析中卡片撐滿空白，不再留下大片空洞 */
+#view-idle.active,#view-confirm.active,#view-loading.active{flex:1}
+#view-idle .now,#view-confirm .now,#view-loading .now{flex:1;justify-content:space-between}
+#view-idle .scanline{height:2px;background:linear-gradient(90deg,var(--ink) 0 18%,rgba(0,0,0,.14) 18%)}
+#qlist{flex:none}
+#test-system[data-state=idle] #qlist,#test-system[data-state=rate] #qlist,#test-system[data-state=confirm] #qlist,#test-system[data-state=loading] #qlist{flex:none}
+
+/* 5. 左側細節 */
+#ai-fields div{grid-template-columns:calc(var(--u)*10) 1fr}
+#ai-fields dt{white-space:nowrap}
+.btn{min-height:34px}
+.btn-rec{border-color:var(--ink)}
+.btn-rec.on{border-color:var(--ink)}
+.btn:disabled{opacity:.4}
+.timer-row{align-items:center}
+#meter{opacity:.85}
+.quote{overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:7}
+.photo-idx{text-shadow:0 1px 12px rgba(0,0,0,.35)}
+
+/* 6. 互動狀態：鍵盤焦點、按下回饋、縮圖 */
+:focus{outline:none}
+.btn:focus-visible,.thumb:focus-visible,#transcript:focus-visible,#sim .sim-btn:focus-visible,#sim .sim-min:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.btn:active:not(:disabled){transform:translateY(1px)}
+.thumb:hover{box-shadow:0 0 0 2px var(--ink)}
+.thumb:hover img{filter:none}
+#transcript:focus{outline:2px solid var(--ink);outline-offset:-2px}
+
+/* 7. 結果頁：長名稱不折行、卡片不互相壓住 */
+.type-row h2{white-space:nowrap;font-size:clamp(34px,5.4vh,64px)}
+.res-body{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden}
+.pole{min-width:0}
+
+/* 8. 較矮的螢幕（≤900px 高）：整體收緊，維持同一版面結構 */
+@media (max-height:900px){
+  .media{height:27vh;margin-top:calc(var(--u)*2)}
+  .prompt{margin-top:calc(var(--u)*1.6)}
+  .prompt p{font-size:clamp(17px,2.2vh,22px);line-height:1.45}
+  .work{margin-top:calc(var(--u)*1.6)}
+  .card{padding:calc(var(--u)*1.8) calc(var(--u)*2)}
+  .k.sm{margin:calc(var(--u)*1) 0 calc(var(--u)*.5)}
+  #ai-fields div{padding:calc(var(--u)*.4) 0}
+  #ai-fields dd{font-size:15px;line-height:1.35}
+  .summary{font-size:15px;line-height:1.45}
+  .quote{font-size:clamp(16px,2.2vh,20px);line-height:1.5}
+  .quote::before{font-size:56px;height:.35em}
+  .closing{display:none}
+  .res-body{-webkit-line-clamp:4;font-size:15px;line-height:1.6}
+  #pole-cards{gap:5px}
+  .pole b{font-size:clamp(28px,4.6vh,40px)}
+  .radar-card{min-height:calc(var(--u)*14)}
+}
+#view-idle .now .lead{margin-top:auto}
