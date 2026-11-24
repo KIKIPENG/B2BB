@@ -188,3 +188,32 @@ body.preview-sheet #print-sheet{display:block;position:fixed;inset:0;margin:auto
 .ttl .en{letter-spacing:.16em}
 .huge,.timer,.photo-idx,.pole b,.qbig{letter-spacing:-.08em}
 .logo{margin-left:auto;align-self:flex-end;height:clamp(40px,6.2vh,68px);width:auto;display:block;margin-bottom:4px}
+
+/* ---------- 模擬輸入面板（?sim=1 或按 ` 開啟；預設隱藏）---------- */
+#sim{position:fixed;right:calc(var(--u)*3.4);bottom:calc(var(--u)*3.4);z-index:9000;width:min(340px,calc(100vw - 24px));background:var(--white);border:1px solid var(--ink);border-radius:var(--r-card);box-shadow:0 12px 40px rgba(0,0,0,.18);font-family:var(--f-mono);color:var(--ink);user-select:none;overflow:hidden}
+#sim .sim-head{display:flex;align-items:center;gap:10px;padding:10px 12px 10px 16px;border-bottom:1px solid var(--line);cursor:grab;touch-action:none}
+#sim .sim-tag{display:inline-flex;align-items:center;height:22px;padding:0 10px;border:1px solid var(--ink);border-radius:var(--r-chip);font:500 11px var(--f-mono);letter-spacing:.14em;background:var(--blue-l)}
+#sim .sim-t{font:400 14px var(--f-zh);letter-spacing:.1em;color:var(--g4);flex:1}
+#sim .sim-min{width:28px;height:28px;border:1px solid var(--ink);border-radius:50%;background:var(--white);font:500 16px/1 var(--f-mono);cursor:pointer;color:var(--ink)}
+#sim .sim-body{padding:12px 16px 14px}
+#sim.closed .sim-body{display:none}
+#sim.closed .sim-head{border-bottom:0}
+#sim .sim-k{font:500 11px/1.35 var(--f-mono);letter-spacing:.14em;color:var(--g4);margin:12px 0 6px}
+#sim .sim-k:first-child{margin-top:0}
+#sim .sim-k em{font:400 12px var(--f-zh);letter-spacing:.08em;color:var(--g3)}
+#sim .sim-grid{display:grid;gap:6px}
+#sim .sim-grid.five{grid-template-columns:repeat(5,1fr)}
+#sim .sim-grid.two{grid-template-columns:1fr 1fr}
+#sim .sim-grid.one{grid-template-columns:1fr;margin-top:6px}
+#sim .sim-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:36px;padding:4px 2px;border:1px solid var(--ink);border-radius:var(--r-chip);background:var(--paper);color:var(--ink);font:500 13px var(--f-mono);letter-spacing:.08em;cursor:pointer;transition:background .12s}
+#sim .sim-btn small{font:400 10px/1.2 var(--f-zh);letter-spacing:.02em;color:var(--g4);margin-top:1px}
+#sim .sim-btn:hover{background:var(--blue-l)}
+#sim .sim-btn:active{background:var(--blue)}
+#sim .sim-btn.ghost{border-style:dashed;border-color:var(--g3);color:var(--g4);flex-direction:row;gap:8px}
+#sim .sim-btn.blue{background:var(--blue-l)}
+#sim .sim-btn.dark{background:var(--ink);color:#fff}
+#sim .sim-btn.dark small{color:var(--g2)}
+#sim .sim-status{margin-top:12px;padding:8px 12px;border-radius:12px;background:var(--g1);font:400 12px var(--f-zh);letter-spacing:.04em;color:var(--g4)}
+#sim .sim-foot{margin-top:8px;font:400 11px var(--f-zh);letter-spacing:.06em;color:var(--g3)}
+@media print{#sim{display:none!important}}
+#sim .sim-btn{border-radius:18px}#sim .sim-btn.ghost{border-radius:var(--r-chip)}
