@@ -286,3 +286,9 @@ p,.quote,.summary,dd{text-wrap:pretty;line-break:strict}
   .radar-card{min-height:calc(var(--u)*14)}
 }
 #view-idle .now .lead{margin-top:auto}
+/* 題目清單與底列：字級縮小（kiki 回饋） */
+#qlist .t{font-size:14.5px}
+#qlist .n{font-size:12px}
+#qlist .s{font-size:16px}
+.status,.keys,kbd{font-size:12px}
+kbd{min-width:16px;height:16px}
